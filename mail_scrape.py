@@ -61,13 +61,13 @@ def scrapeSubPages(_url, _depth, _superUrlSet = set()):
     scrapeParser = HTMLParser(_url)
     scrapeParser.feed(str(page.read()))
 
-    print(scrapeParser.scrapedEmails)
+    # print(scrapeParser.scrapedEmails)
 
     # iterate through all newly found urls in this webpage
     if _depth != 0:
         for newURL in list(scrapeParser.scrapedURLs):
             if newURL not in _superUrlSet:
-                print("url enumerated: " + newURL)
+                # print("url enumerated: " + newURL)
                 # get new scraped emails and add to this specific parser's set
                 _superUrlSet.add(newURL)
                 newEmails = scrapeSubPages(newURL, _depth - 1, _superUrlSet)
