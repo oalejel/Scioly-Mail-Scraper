@@ -41,15 +41,11 @@ class HTMLParser(HTMLParser):
         self.scrapedURLs.add(h)
 
     def handle_starttag(self, tag, attrs):
-        # print("START: " + tag)
         if tag == "a":
             for att in attrs:
                 if "href" in att:
                     #get second item in attribute pair if we have an href
                     self.parseHref(att[1])
-
-    # def handle_endtag(self, tag):
-    #     pass
 
 def scrapeSubPages(_url, _depth, _superUrlSet = set()):
     #perform scraping given the url
@@ -78,11 +74,17 @@ def scrapeSubPages(_url, _depth, _superUrlSet = set()):
 
     return scrapeParser.scrapedEmails
 
+depth = 0
 # main program
 if len(sys.argv) > 1:
     url = sys.argv[1]
 else:
-    url = raw_input("Website URL: ")
+    url = input("Website URL: ")
+
+if len(sys.argv) > 2:
+    depth = sys.arg[2]
+else:
+    depth = int(input("Search Depth: "))
 
 #remember that slice ranges have an excluded upper bound
 if url[0:4] != "http":
@@ -91,6 +93,6 @@ if url[0:4] != "http":
 
 print("Site to scrape: \"" + url + "\"" + "...\n")
 
-# this will go in 5 levels deep into subdirectories and add to list of emails
-emails = scrapeSubPages(url, 1)
+# this will go in "depth" levels deep into subdirectories and add to list of emails
+emails = scrapeSubPages(url, depth)
 print(emails)
